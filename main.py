@@ -1,8 +1,9 @@
 import telebot
 from telebot import types
 from datetime import datetime
+import csv
 
-bot = telebot.TeleBot('5712366693:AAFlQ-NFnYchZfnZy6pXq89IGPQcCemFCsE')
+# bot = telebot.TeleBot('5712366693:AAFlQ-NFnYchZfnZy6pXq89IGPQcCemFCsE')
 
 """@bot.message_handler(content_types=["text"])
 def handle_text(message):
@@ -10,7 +11,7 @@ def handle_text(message):
                      f'Текущая дата {datetime.today().strftime("%d.%m.%Y")}')
 """
 
-
+"""
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -53,3 +54,14 @@ def func(message):
 
 
 bot.polling(none_stop=True, interval=0)
+"""
+
+with open('Schedule_evenweek.csv', encoding='utf-8-sig') as r_file:
+    reader = csv.DictReader(r_file, delimiter=";")
+    dayofweek = input()
+    print(f'В {dayofweek} у Вас:')
+    for row in reader:
+        # print(row)
+        if row['День недели'] == dayofweek:
+            print(row['Время'], row['Тип'],
+                  row['Название предмета'], row['Адрес'], row['Преподаватель'])
